@@ -105,6 +105,14 @@ src/
 test/                   end-to-end tests
 ```
 
+## Privacy
+
+Stellar transactions are public, and this product has a public ledger. Read
+[docs/privacy-model.md](docs/privacy-model.md) before adding an endpoint, a
+response field, a log line or a supporter-facing feature. In particular: a
+wallet address is not a person's identity, and a supporter's name and message
+are private until they explicitly opt in.
+
 ## Contributing
 
 Read the [contributing guide](https://github.com/open-support-ledger/.github/blob/main/CONTRIBUTING.md), then pick an issue. Please read the whole issue, including scope and acceptance criteria, before starting.
