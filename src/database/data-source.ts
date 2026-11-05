@@ -12,6 +12,9 @@ try {
 export default new DataSource({
   type: 'postgres',
   url: process.env.DATABASE_URL,
+  // Must match DatabaseModule, or migration:check reports phantom drift.
+  uuidExtension: 'pgcrypto',
+  installExtensions: false,
   entities: [join(import.meta.dirname, '..', '**', '*.entity.js')],
   migrations: [join(import.meta.dirname, 'migrations', '*.js')],
 });
