@@ -10,6 +10,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         type: 'postgres' as const,
         url: config.getOrThrow<string>('DATABASE_URL'),
         autoLoadEntities: true,
+        // gen_random_uuid() is built into Postgres 13+: no extension to install.
+        uuidExtension: 'pgcrypto' as const,
+        installExtensions: false,
         // Never enable synchronize. Schema changes go through migrations.
         synchronize: false,
         migrationsRun: false,
