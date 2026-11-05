@@ -1,0 +1,4 @@
+# @scarf/scarf is an optional telemetry postinstall pulled in by Swagger.
+# Deny it so installs are deterministic and send no telemetry.
+allowBuilds:
+  '@scarf/scarf': false

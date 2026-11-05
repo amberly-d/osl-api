@@ -40,36 +40,22 @@ Check that it works: `curl http://localhost:3000/health` should return `{"status
 
 Use **Stellar testnet** for all development. Never commit `.env` or any secret key.
 
-## Run Postgres with Docker (optional)
+## API documentation
 
-If you do not want to install PostgreSQL, use the included Compose setup. It
-matches `.env.example` (`postgres` / `postgres` on `localhost:5432`) and creates
-both `osl_dev` and `osl_test` on first start.
+Swagger UI is served at <http://localhost:3000/docs> and the OpenAPI 3 JSON at
+<http://localhost:3000/docs-json>. The document is generated from the NestJS
+decorators at runtime, so it cannot drift from the handlers.
 
-```bash
-cp .env.example .env
-pnpm db:up
-pnpm migration:run
-pnpm start:dev
-```
+When adding an endpoint:
 
-The service binds to `127.0.0.1` only. These credentials are for local
-development; never reuse them in production.
+1. Add a response class with `@ApiProperty` for every field that is returned.
+2. Document the handler with `@ApiOperation`, `@ApiOkResponse` (and error
+   responses), and `@ApiTags`.
+3. Prefer explicit response DTOs over returning entities, especially for public
+   endpoints.
 
-```bash
-pnpm db:down    # stop, keeping the data volume
-pnpm db:reset   # remove the volume and start a clean database
-```
-
-To use a different host port, set `POSTGRES_PORT` (for example
-`POSTGRES_PORT=55432 pnpm db:up`) and update the port in `DATABASE_URL`.
-
-`docker-entrypoint-initdb.d/01-create-databases.sql` only runs when the data
-volume is empty. That is why `db:reset` is required after changing the init
-script or starting from an older volume.
-
-The manual PostgreSQL instructions above still work; Docker is only an
-alternative for local development.
+`GET /health` is the reference example. Generated spec files and clients are not
+committed.
 
 ## Scripts
 
