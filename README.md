@@ -6,10 +6,10 @@ NestJS backend and payment indexer for **Open Support Ledger**, a transparent fu
 
 ## How the repos fit together
 
-| Repo | Role |
-|---|---|
-| **osl-api** (this repo) | Backend API, database, payment indexer |
-| [osl-web](https://github.com/open-support-ledger/osl-web) | Next.js frontend |
+| Repo                                                          | Role                                                          |
+| ------------------------------------------------------------- | ------------------------------------------------------------- |
+| **osl-api** (this repo)                                       | Backend API, database, payment indexer                        |
+| [osl-web](https://github.com/open-support-ledger/osl-web)     | Next.js frontend                                              |
 | [osl-chain](https://github.com/open-support-ledger/osl-chain) | TypeScript library for reading and verifying Stellar payments |
 
 ## Requirements
@@ -47,12 +47,12 @@ identified by **both** its code and issuer: anyone can create a token called
 `USDC`, so matching the code alone would let an unrelated token inflate project
 totals.
 
-| Network | Asset | Issuer |
-|---|---|---|
-| Testnet | XLM | native (`null`) |
-| Testnet | USDC | `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5` |
-| Mainnet | XLM | native (`null`) |
-| Mainnet | USDC | `GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN` |
+| Network | Asset | Issuer                                                     |
+| ------- | ----- | ---------------------------------------------------------- |
+| Testnet | XLM   | native (`null`)                                            |
+| Testnet | USDC  | `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5` |
+| Mainnet | XLM   | native (`null`)                                            |
+| Mainnet | USDC  | `GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN` |
 
 The issuer addresses come from Circle's official [USDC contract address
 table](https://developers.circle.com/stablecoins/usdc-contract-addresses).
@@ -62,18 +62,19 @@ in `src/chain/` and are exported from `src/chain/index.ts`.
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `pnpm start:dev` | Run the API in watch mode |
-| `pnpm build` | Compile to `dist/` |
-| `pnpm lint` | Lint with oxlint |
-| `pnpm format` / `pnpm format:check` | Format with Prettier / check formatting |
-| `pnpm typecheck` | Type-check without emitting |
-| `pnpm test` | Unit tests (no database needed) |
-| `pnpm test:e2e` | End-to-end tests (needs Postgres at `DATABASE_URL`) |
-| `pnpm migration:generate src/database/migrations/<Name>` | Generate a migration from entity changes |
-| `pnpm migration:run` / `pnpm migration:revert` | Apply / undo migrations |
-| `pnpm migration:check` | Fail if entities and migrations are out of sync |
+| Command                                                  | What it does                                                  |
+| -------------------------------------------------------- | ------------------------------------------------------------- |
+| `pnpm start:dev`                                         | Run the API in watch mode                                     |
+| `pnpm build`                                             | Compile to `dist/`                                            |
+| `pnpm lint`                                              | Lint with oxlint                                              |
+| `pnpm format` / `pnpm format:check`                      | Format with Prettier / check formatting                       |
+| `pnpm typecheck`                                         | Type-check without emitting                                   |
+| `pnpm test`                                              | Unit tests (no database needed)                               |
+| `pnpm test:e2e`                                          | End-to-end tests (needs Postgres at `DATABASE_URL`)           |
+| `pnpm migration:generate src/database/migrations/<Name>` | Generate a migration from entity changes                      |
+| `pnpm migration:run` / `pnpm migration:revert`           | Apply / undo migrations                                       |
+| `pnpm chain:spike`                                       | Testnet-only spike for ADR 0001 (not part of CI; see the ADR) |
+| `pnpm migration:check`                                   | Fail if entities and migrations are out of sync               |
 
 Run lint, format check, typecheck, test, and build before opening a PR. CI runs the same steps.
 
@@ -112,6 +113,10 @@ Stellar transactions are public, and this product has a public ledger. Read
 response field, a log line or a supporter-facing feature. In particular: a
 wallet address is not a person's identity, and a supporter's name and message
 are private until they explicitly opt in.
+
+## Architecture decisions
+
+Significant decisions are recorded as ADRs in [`docs/adr`](docs/adr/README.md). Start with [ADR 0001: how `osl-api` reads Stellar payments](docs/adr/0001-chain-data-source.md).
 
 ## Contributing
 
