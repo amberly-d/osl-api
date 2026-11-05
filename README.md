@@ -40,22 +40,25 @@ Check that it works: `curl http://localhost:3000/health` should return `{"status
 
 Use **Stellar testnet** for all development. Never commit `.env` or any secret key.
 
-## API documentation
+## Supported assets
 
-Swagger UI is served at <http://localhost:3000/docs> and the OpenAPI 3 JSON at
-<http://localhost:3000/docs-json>. The document is generated from the NestJS
-decorators at runtime, so it cannot drift from the handlers.
+The MVP accepts only native XLM and Circle-issued USDC. An issued asset is
+identified by **both** its code and issuer: anyone can create a token called
+`USDC`, so matching the code alone would let an unrelated token inflate project
+totals.
 
-When adding an endpoint:
+| Network | Asset | Issuer |
+|---|---|---|
+| Testnet | XLM | native (`null`) |
+| Testnet | USDC | `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5` |
+| Mainnet | XLM | native (`null`) |
+| Mainnet | USDC | `GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN` |
 
-1. Add a response class with `@ApiProperty` for every field that is returned.
-2. Document the handler with `@ApiOperation`, `@ApiOkResponse` (and error
-   responses), and `@ApiTags`.
-3. Prefer explicit response DTOs over returning entities, especially for public
-   endpoints.
-
-`GET /health` is the reference example. Generated spec files and clients are not
-committed.
+The issuer addresses come from Circle's official [USDC contract address
+table](https://developers.circle.com/stablecoins/usdc-contract-addresses).
+Matching is exact and case-sensitive; a native asset with an issuer, the other
+network's issuer, or a different issuer is rejected. The types and helpers live
+in `src/chain/` and are exported from `src/chain/index.ts`.
 
 ## Scripts
 
