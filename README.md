@@ -40,6 +40,26 @@ Check that it works: `curl http://localhost:3000/health` should return `{"status
 
 Use **Stellar testnet** for all development. Never commit `.env` or any secret key.
 
+## Supported assets
+
+The MVP accepts only native XLM and Circle-issued USDC. An issued asset is
+identified by **both** its code and issuer: anyone can create a token called
+`USDC`, so matching the code alone would let an unrelated token inflate project
+totals.
+
+| Network | Asset | Issuer |
+|---|---|---|
+| Testnet | XLM | native (`null`) |
+| Testnet | USDC | `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5` |
+| Mainnet | XLM | native (`null`) |
+| Mainnet | USDC | `GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN` |
+
+The issuer addresses come from Circle's official [USDC contract address
+table](https://developers.circle.com/stablecoins/usdc-contract-addresses).
+Matching is exact and case-sensitive; a native asset with an issuer, the other
+network's issuer, or a different issuer is rejected. The types and helpers live
+in `src/chain/` and are exported from `src/chain/index.ts`.
+
 ## Scripts
 
 | Command | What it does |
