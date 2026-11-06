@@ -30,7 +30,8 @@
     "migration:run": "pnpm build && typeorm migration:run -d dist/database/data-source.js",
     "migration:revert": "pnpm build && typeorm migration:revert -d dist/database/data-source.js",
     "migration:generate": "pnpm build && typeorm migration:generate --esm -d dist/database/data-source.js",
-    "migration:check": "pnpm build && typeorm migration:generate --check -d dist/database/data-source.js src/database/migrations/Check"
+    "migration:check": "pnpm build && typeorm migration:generate --check -d dist/database/data-source.js src/database/migrations/Check",
+    "chain:spike": "tsx scripts/chain-spike.ts"
   },
   "dependencies": {
     "@nestjs/common": "^12.0.1",
@@ -53,6 +54,7 @@
     "@nestjs/mau": "^0.2.6",
     "@nestjs/schematics": "^12.0.0",
     "@nestjs/testing": "^12.0.1",
+    "@stellar/stellar-base": "^15.0.0",
     "@types/express": "^5.0.0",
     "@types/node": "^24.0.0",
     "@types/pg": "^8.23.1",
@@ -63,6 +65,7 @@
     "prettier": "^3.4.2",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.2",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.1.2"
