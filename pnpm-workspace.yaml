@@ -1,4 +1,7 @@
 # @scarf/scarf is an optional telemetry postinstall pulled in by Swagger.
 # Deny it so installs are deterministic and send no telemetry.
+# esbuild's install script only verifies its binary, which already comes from
+# the platform-specific optional package, so it is not needed either.
 allowBuilds:
   '@scarf/scarf': false
+  esbuild: false
